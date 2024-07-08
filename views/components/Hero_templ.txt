@@ -1,0 +1,2 @@
+<main class=\"w-full h-96 bg-zinc-50 flex justify-center items-center\"><h1 class=\"text-4xl font-bold\">
+</h1><h1 x-data=\"{ message: &#39;I ❤️ Alpine&#39; }\" x-text=\"message\"></h1></main>

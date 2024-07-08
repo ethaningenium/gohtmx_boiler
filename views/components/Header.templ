@@ -1,0 +1,21 @@
+package components
+import (
+  "templtest/internal/entities"
+)
+
+
+templ Header(user entities.User){
+  <header class="w-full flex justify-center py-3">
+    <div class="container flex items-center justify-between">
+      <h1 class="text-2xl font-bold text-zinc-800">SyncWord</h1>
+      @Profile(user.Name, user.Email)
+    </div>
+  </header>
+}
+
+templ Profile(userName, userEmail string){
+  <div class="flex flex-col gap-1">
+    <span class="text-zinc-800 font-bold">{userName}</span>
+    <span class="text-xs font-light text-zinc-500">{userEmail}</span>
+  </div>
+}

@@ -1,0 +1,49 @@
+package pages
+
+import (
+  "templtest/views/components"
+  "templtest/views/layouts"
+  "templtest/internal/entities"
+  "fmt"
+)
+
+templ Index(user entities.User, todos []entities.Todo){
+  @layouts.BaseLayout("Go app"){
+    @components.Header(user)
+    <main class="w-full flex justify-center" x-data={fmt.Sprintf("{ todosCount: %v }", len(todos))}>
+      <div class="container flex md:flex-row flex-col gap-6">
+        <div class="w-full md:w-1/2 flex flex-col gap-2 " id="todos" >
+          @TodoList(todos)
+          <div class="w-full p-4 bg-blue-900 rounded-lg" x-show="todosCount == 0">
+            <span class="text-lg font-bold text-white">Пока нету Todos</span>
+          </div>
+        </div>
+        @TodoCreate()
+      </div>
+    </main>
+  }
+}
+
+templ TodoComponent(todo entities.Todo){
+  <div class="w-full flex items-center justify-between p-4 bg-zinc-50 border border-zinc-400 rounded-lg" x-show="visible == true" x-data="{visible: true}">
+    <span class="text-lg font-bold text-zinc-600">{todo.Title}</span>
+    <button id={todo.ID} class="p-2 bg-red-500 text-white" @click="visible=false; todosCount = todosCount - 1"
+      hx-delete={"/todos/" + todo.ID} hx-swap="delete transition:true">Delete</button>
+  </div>
+}
+
+templ TodoList(todos []entities.Todo){
+  if len(todos) > 0 {
+    for _, todo := range todos{
+      @TodoComponent(todo)
+    }
+  }
+}
+
+templ TodoCreate(){
+  <form class="w-full md:w-1/2 p-6 border border-zinc-300 rounded-lg" hx-post="/todos" hx-swap="afterbegin transition:true" hx-target="#todos">
+    <label for="title">Title</label>
+    <input id="title" type="text" name="title" class="w-full p-2 border border-zinc-200 rounded"/>
+    <button type="submit" @click="todosCount = todosCount + 1" class="w-full bg-blue-600 rounded-lg py-3 text-white mt-12">Create</button>
+  </form>
+}

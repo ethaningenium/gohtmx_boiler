@@ -1,0 +1,9 @@
+ <main class=\"w-full flex justify-center\" x-data=\"
+\"><div class=\"container flex md:flex-row flex-col gap-6\"><div class=\"w-full md:w-1/2 flex flex-col gap-2 \" id=\"todos\">
+<div class=\"w-full p-4 bg-blue-900 rounded-lg\" x-show=\"todosCount == 0\"><span class=\"text-lg font-bold text-white\">Пока нету Todos</span></div></div>
+</div></main>
+<div class=\"w-full flex items-center justify-between p-4 bg-zinc-50 border border-zinc-400 rounded-lg\" x-show=\"visible == true\" x-data=\"{visible: true}\"><span class=\"text-lg font-bold text-zinc-600\">
+</span> <button id=\"
+\" class=\"p-2 bg-red-500 text-white\" @click=\"visible=false; todosCount = todosCount - 1\" hx-delete=\"
+\" hx-swap=\"delete transition:true\">Delete</button></div>
+<form class=\"w-full md:w-1/2 p-6 border border-zinc-300 rounded-lg\" hx-post=\"/todos\" hx-swap=\"afterbegin transition:true\" hx-target=\"#todos\"><label for=\"title\">Title</label> <input id=\"title\" type=\"text\" name=\"title\" class=\"w-full p-2 border border-zinc-200 rounded\"> <button type=\"submit\" @click=\"todosCount = todosCount + 1\" class=\"w-full bg-blue-600 rounded-lg py-3 text-white mt-12\">Create</button></form>
